@@ -1,0 +1,28 @@
+{
+  "canisters": {
+    "dtoken_backend": {
+      "main": "src/dtoken_backend/main.mo",
+      "type": "motoko"
+    },
+    "dtoken_frontend": {
+      "dependencies": [
+        "dtoken_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/dtoken_frontend/src/index.html"
+      },
+      "source": [
+        "src/dtoken_frontend/assets",
+        "dist/dtoken_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "version": 1
+}
