@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Principal } from '@dfinity/principal';
 import { Actor, HttpAgent } from "@dfinity/agent";
 import { AuthClient } from '@dfinity/auth-client';
-import { dtoken_backend, idlFactory, canisterId, createActor } from '../../../declarations/dtoken_backend/index';
+import { idlFactory, canisterId } from '@declarations/dtoken_backend';
 
 function Transfer() {
     const [recipientID, setRecipientID] = useState("");
@@ -10,17 +10,18 @@ function Transfer() {
     const [isDisabled, setDisabled] = useState(false);
     const [showTransfer, setShowTransfer] = useState(false);
     const [transferMessage, setTransferMessage] = useState("");
+    console.log("Transfer -> init -> canisterId", canisterId);
 
     async function handleClick() {
         setDisabled(true);
         setShowTransfer(false);
-        let recipient = "";
+        let recipient: Principal;
 
         try {
             recipient = Principal.fromText(recipientID);
         } catch (ex) {
-            console.error(ex);
-            setTransferMessage("Could not carry out the transfer due to an error. " + ex.message);
+            console.error("Transfer -> handleClick -> error", ex);
+            setTransferMessage("Could not carry out the transfer due to an error. " + (ex as Error).message);
             setShowTransfer(true);
             setDisabled(false);
             return;
@@ -46,10 +47,14 @@ function Transfer() {
         });
 
         const amountToTransfer = Number(amount);
-        console.log("Transferring: " + amountToTransfer + " to " + recipient);
+        console.log("Transfer -> handleClick -> Transferring: " + amountToTransfer + " to " + recipient);
         let transferResult = await authenticatedActor.transfer(recipient, amountToTransfer);
-        console.log("Transfer Result: " + transferResult);
-        setTransferMessage(transferResult);
+        console.log("Transfer -> handleClick -> Transfer Result: " + transferResult);
+
+        if (transferResult && typeof transferResult === "string") {
+            setTransferMessage(transferResult);
+        }
+
         setShowTransfer(true);
         setDisabled(false);
     }

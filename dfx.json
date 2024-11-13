@@ -8,14 +8,22 @@
       "dependencies": [
         "dtoken_backend"
       ],
-      "frontend": {
-        "entrypoint": "src/dtoken_frontend/src/index.html"
-      },
       "source": [
-        "src/dtoken_frontend/assets",
-        "dist/dtoken_frontend/"
+        "src/dtoken_frontend/dist"
       ],
-      "type": "assets"
+      "type": "assets",
+      "workspace": "dtoken_frontend"
+    },
+    "internet_identity": {
+      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
+      "frontend": {},
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      },
+      "type": "custom",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz"
     }
   },
   "defaults": {
@@ -24,5 +32,6 @@
       "packtool": ""
     }
   },
+  "output_env_file": ".env",
   "version": 1
 }

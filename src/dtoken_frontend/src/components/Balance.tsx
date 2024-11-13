@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 import { Principal } from '@dfinity/principal';
-import { dtoken_backend } from '../../../declarations/dtoken_backend/index';
+import { dtoken_backend } from '@declarations/dtoken_backend';
 
-function Balance() {
-    const [inputValue, setInput] = useState("");
+type Props = {
+    userPrincipal: Principal
+};
+
+function Balance(props: Props) {
+    const [inputValue, setInput] = useState(props.userPrincipal.toLocaleString());
     const [balanceResult, setBalance] = useState("");
     const [cryptoSymbol, setSymbol] = useState("");
     const [balanceHidden, setBalanceHidden] = useState(true);
 
     async function handleClick() {
-        console.log("Checking balance for: " + inputValue);
-        let principal = "";
+        console.log("Balance -> handleClick -> Checking balance for: " + inputValue);
+        let principal: Principal;
 
         try {
             principal = Principal.fromText(inputValue);
         } catch (ex) {
-            console.error(ex);
-            setBalance("Could not check balance due to an error. " + ex.message);
+            console.error("Balance -> handleClick -> error", ex);
+            setBalance("Could not check balance due to an error. " + (ex as Error).message);
             setBalanceHidden(false);
             return;
         }
 
         const balance = await dtoken_backend.balanceOf(principal);
         const symbol = await dtoken_backend.getSymbol();
-        console.log("Balance received for " + inputValue + ": " + balance + " " + symbol);
+        console.log("Balance -> handleClick -> Balance received for " + inputValue + ": " + balance + " " + symbol);
         setBalance(balance.toLocaleString());
         setSymbol(symbol);
         setBalanceHidden(false);

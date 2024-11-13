@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import HighlightIcon from '@mui/icons-material/Highlight';
-import logoUrl, { ReactComponent as Logo } from "../../assets/logo.svg";
-import DateManager from '../util/dateUtils.js';
+import logoUrl from "../../public/logo2.svg";
+import DateManager from '@lib/dateUtils.js';
 
-// let dm = new DateManager(Date.now());
+// const dm = new DateManager(Date.now());
 // let dmTomorrow = dm.clone().adjustDays(1).ukDateString
 
 export function Header() {
-    const [time, setTime] = useState(new DateManager());
-    setInterval(() => setTime(new DateManager()), 1000);
+    const [time, setTime] = useState(new DateManager(Date.now()));
+    setInterval(() => setTime(new DateManager(Date.now())), 1000);
     return (
         <header className="App-header">
             💎

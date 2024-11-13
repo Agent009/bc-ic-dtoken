@@ -1,13 +1,12 @@
-import List "mo:base/List";
 import Debug "mo:base/Debug";
 import Principal "mo:base/Principal";
 import Nat "mo:base/Nat";
 import HashMap "mo:base/HashMap";
-import Prelude "mo:base/Prelude";
 import Iter "mo:base/Iter";
 
 actor DToken {
-    let owner : Principal = Principal.fromText("jxic7-kzwkr-4kcyk-2yql7-uqsrg-lvrzb-k7avx-e4nbh-nfmli-rddvs-mqe");
+    // let owner : Principal = Principal.fromText("7eevz-2ra7p-dsih3-3tyar-ve5rp-gfzj4-6oopo-7lno4-miffl-jj4mm-wqe");
+    let owner : Principal = Principal.fromText("bkyz2-fmaaa-aaaaa-qaaaq-cai");
     let totalSupply : Nat = 1000000000;
     let symbol : Text = "DTOKEN";
 
@@ -61,7 +60,7 @@ actor DToken {
             // This requires that the canister is first charged with the tokens, so that tokens can be transferred out of it.
             // View the "Charge the Canister" section of the README.md for how to do this.
             // 
-            let transferResponse : Text = await transfer(msg.caller, amount);
+            let _ : Text = await transfer(msg.caller, amount);
 
             Debug.print(debug_show (("payOut to", msg.caller, "for an amount of", amount, "completed.")));
             return "Payout claimed successfully by " # payeeStr;
